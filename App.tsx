@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import { createDrawerNavigator } from "@react-navigation/drawer"
+import { createStackNavigator } from "@react-navigation/stack"
+import NewsScreen from "./screens/NewsScreen"
+import NewsDetailsScreen from "./screens/NewsDetailsScreen"
+import GalleryScreen from "./screens/GalleryScreen"
+import DrawerContent from "./screens/DrawerContent"
+
+const Drawer = createDrawerNavigator()
+const Stack = createStackNavigator()
+
+function NewsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Новини" component={NewsScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Деталі" component={NewsDetailsScreen} />
+    </Stack.Navigator>
+  )
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+        <Drawer.Screen name="Новини" component={NewsStack} />
+        <Drawer.Screen name="Галерея" component={GalleryScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
